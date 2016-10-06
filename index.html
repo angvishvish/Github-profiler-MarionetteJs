@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Github App</title>
+    <link rel="icon" href="img/favicon.png" type="" />
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+    <style>
+      a[data-icon] {
+        position: absolute;
+        right: 20px;
+        top: 5px;
+        color: inherit;
+      }
+      a[data-icon=edit] {
+        right: 60px;
+      }
+      label[class*=col-md-],
+      p[class*=col-md-] {
+        margin-bottom: 0
+      }
+    </style>
+  </head>
+  <body>
+    <header class="container">
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Github App</a>
+          </div>
+
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li class=""><a href="#">Profile</a></li>
+              <li class=""><a href="#">Photos</a></li>
+            </ul>
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
+    </header>
+    
+    <div id="app-github-list"></div>
+    
+    <footer id="app-footer"></footer>
+
+    <script type="type/template" id="home-template">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 col-md-offset-4">
+          <h4>Enter user name</h4>
+          <div class="row">
+            <div class="col-md-8">
+              <input type="text" id="searchName" class="form-control" />
+            </div>
+            <div class="col-md-4">
+              <button type="button" id="search-username" class="btn btn-primary btn-block">Search</button>
+            </div>
+          </div>
+         </div>  
+        </div>
+      </div>
+    </script>
+    
+    <script type="type/template" id="profile-template">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 col-md-offset-4">
+            <% if (!error) { %>
+              <ul class="list-group">
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <img class="img-responsive" src="<%= avatar_url %>"/>
+                    </div>
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div class="row">
+                    <label class="col-md-3 col-xs-3">Name</label>
+                    <p class="col-md-9 col-xs-9"><%= name %></p>
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div class="row">
+                    <label class="col-md-3 col-xs-3">Email</label>
+                    <p class="col-md-9 col-xs-9"><%= email %></p>
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div class="row">
+                    <label class="col-md-3 col-xs-3">Followers</label>
+                    <p class="col-md-9 col-xs-9"><%= followers %></p>
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div class="row">
+                    <label class="col-md-3 col-xs-3">Following</label>
+                    <p class="col-md-9 col-xs-9"><%= following %></p>
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div class="row">
+                    <label class="col-md-3 col-xs-3">Location</label>
+                    <p class="col-md-9 col-xs-9"><%= location %></p>
+                  </div>
+                </li>
+              </ul>
+              <a href="/#search/<%= login %>/repos" class="btn btn-link">Show Repos</a>
+            <% } else { %>
+              <div class="alert alert-warning">
+                <%= error.statusText %>
+                <a href="/#" class="pull-right">Back</a>
+              </div>
+            <% } %>
+          </div>  
+        </div>
+      </div>
+    </script>
+
+    <script type="type/template" id="repo-collection-template">
+      
+    </script>
+    
+    <script type="type/template" id="repo-item-template">
+      <span class="badge"><%= data.forks_count %></span>
+      <% if (data.description) { %>
+        <%= data.description %>
+      <% } else { %>
+        No Description
+      <% } %>
+    </script>
+
+    <script src="js/libs/jquery.js"></script>
+    <script src="js/libs/bootstrap.min.js"></script>
+    <script src="js/libs/underscore.js"></script>
+    <script src="js/libs/backbone.js"></script>
+    <script src="js/libs/backbone-marionette.js"></script>
+    
+    <!-- Application setup -->
+    <script src="js/config.js"></script>
+    <script src="js/routers/router.js"></script>
+    
+    <script src="js/controllers/controller.js"></script>
+
+    <script src="js/collections/collection.js"></script>    
+
+    <script src="js/models/model.js"></script>
+    <script src="js/models/repo-model.js"></script>
+    
+    <script src="js/views/home-item-view.js"></script>
+    <script src="js/views/profile-item-view.js"></script>
+    <script src="js/views/repo-item-view.js"></script>
+    <script src="js/views/repo-collection-view.js"></script>
+    
+    <script>
+      $(function (){
+        GithubApp.start();
+      });
+    </script>
+  </body>
+</html>
